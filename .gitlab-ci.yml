@@ -1,0 +1,18 @@
+stages:
+  - publish
+
+publish_release:
+  stage: publish
+  script:
+    - cp /app/release/app-release.apk release/
+  artifacts:
+    paths:
+      - release/app-release.apk
+
+publish_debug:
+  stage: publish
+  script:
+    - cp /app/debug/app-debug.apk debug/
+  artifacts:
+    paths:
+      - debug/app-debug.apk
