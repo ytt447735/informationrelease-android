@@ -1,18 +1,21 @@
 stages:
-  - publish
+  - build
+  - deploy
 
-publish_release:
-  stage: publish
+build:
+  stage: build
   script:
-    - cp /app/release/app-release.apk release/
+    - ./gradlew assembleRelease
+    - ./gradlew assembleDebug
+
+deploy:
+  stage: deploy
+  script:
+    - mkdir public
+    - cp app/release/app-release.apk public/
+    - cp app/debug/app-debug.apk public/
   artifacts:
     paths:
-      - release/app-release.apk
-
-publish_debug:
-  stage: publish
-  script:
-    - cp /app/debug/app-debug.apk debug/
-  artifacts:
-    paths:
-      - debug/app-debug.apk
+      - public
+  only:
+    - master
